@@ -8,11 +8,19 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-$app = new \Slim\App;
-
 // Get All Customers
+$app->add(new \Slim\Middleware\HttpBasicAuthentication(
+    [
+        "path" => "/api/customers",
+        "secure" => false,
+        "users" => [
+            "admin" => "admin"
+        ]
+    ]
+));
 
-$app->get('/api/customers', function (Request $request, Response $response) {
+
+$app->get('/api/customers', function (Request $request, Response $response, $arguments) {
     $sql = "Select * from customers";
 
     try {

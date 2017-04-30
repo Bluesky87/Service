@@ -11,13 +11,21 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require '../vendor/autoload.php';
 require '../src/config/db.php';
 
-$app = new \Slim\App;
-$app->get('/hello/{name}', function (Request $request, Response $response) {
+$configuration = [
+    'settings' => [
+        'displayErrorDetails' => true,
+    ],
+];
+$c = new \Slim\Container($configuration);
+$app = new \Slim\App($c);
+
+
+/*$app->get('/hello/{name}', function (Request $request, Response $response) {
     $name = $request->getAttribute('name');
     $response->getBody()->write("Hello, $name");
 
     return $response;
-});
+});*/
 
 // Customer Routes
 
